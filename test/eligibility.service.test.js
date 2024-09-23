@@ -357,5 +357,88 @@ describe('Eligibility', () => {
       const actualEligibility = eligibilityService.isEligible(cart, criteria);
       should(actualEligibility).be.false();
     });
+    it('should be eligible with example values fullfiled', () => {
+      const cart = {
+        "cartId": "cart-id",
+        "shopperId": "shopper-id",
+        "date": "2021-10-06T18:35:42.000Z",
+        "totalAti": 99.80,
+        "promoCode": "voucher-42",
+        "products": [
+          {
+            "productId": "5449000054227",
+            "quantity": 20,
+            "unitPriceAti": 2.5,
+            "totalPriceAti": 50
+          },
+          {
+            "productId": "3099873045369",
+            "quantity": 2,
+            "unitPriceAti": 24.90,
+            "totalPriceAti": 49.80
+          }
+        ]
+      }
+      const validCriteria = {
+        "shopperId": "shopper-id",
+        "totalAti": {
+          "gt": 50
+        },
+        "products.productId": {
+          "in": ["5449000054227"]
+        }
+      };
+
+      const invalidCriteria = {
+        "quantity": {
+          "and": {
+            "gt": "3",
+            "lt": "10"
+          }
+        }
+      };
+
+      const eligibilityService = new EligibilityService();
+      const actualEligibility = eligibilityService.isEligible(cart, validCriteria);
+      should(actualEligibility).be.true();
+      should(eligibilityService.isEligible(cart, invalidCriteria)).be.false();
+    });
+
+    it('should be eligible with date type values', () => {
+      const cart = {
+        "cartId": "cart-id",
+        "shopperId": "shopper-id",
+        "date": "2021-10-06T18:35:42.000Z",
+        "totalAti": 99.80,
+        "promoCode": "voucher-42",
+        "products": [
+          {
+            "productId": "5449000054227",
+            "quantity": 20,
+            "unitPriceAti": 2.5,
+            "totalPriceAti": 50
+          },
+          {
+            "productId": "3099873045369",
+            "quantity": 2,
+            "unitPriceAti": 24.90,
+            "totalPriceAti": 49.80
+          }
+        ]
+      }
+
+      const criteria = {
+        "date": {
+          "and": {
+            "gt": "2021-09-01T00:00:00.000Z",
+            "lt": "2021-12-31T23:59:59.000Z"
+          }
+        }
+      };
+
+      const eligibilityService = new EligibilityService();
+      const actualEligibility = eligibilityService.isEligible(cart, criteria);
+      should(actualEligibility).be.true();
+    });
   });
 });
