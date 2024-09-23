@@ -1,4 +1,4 @@
-const { isPlainObject, toPairs } = require('lodash');
+const { isPlainObject } = require('lodash');
 
 /**
  * getValue by key
@@ -24,7 +24,7 @@ const getValue = (key, cart) => {
 };
 
 const formatConditions = (rule) => {
-  return toPairs(rule).map(([k, v]) => ({ [k]: v }));
+  return Object.keys(rule).map((k) => ({ [k]: rule[k] }));
 };
 
 const splitCondition = (condition) => {
