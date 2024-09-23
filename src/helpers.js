@@ -24,10 +24,11 @@ const getValue = (key, cart) => {
 };
 
 const formatConditions = (rule) => {
-  return Object.keys(rule).map((k) => ({ [k]: rule[k] }));
+  return Object.entries(rule).map(([k, v]) => ({ [k]: v }));
 };
 
 const splitCondition = (condition) => {
+  // FIXME: can get rid of lodash with typescript
   const isEq = !isPlainObject(condition);
 
   const operator = isEq ? 'eq' : Object.keys(condition).at(0);
