@@ -10,6 +10,25 @@ const validateCondition = (condition, value) => {
   return ValidatorFactory.getValidator(operator).validate(rule, value);
 };
 
+class ValidatorFactory {
+  static getValidator(operator) {
+    const validationClasses = {
+      eq: SimpleConditionValidator,
+      in: SimpleConditionValidator,
+      gt: SimpleConditionValidator,
+      gte: SimpleConditionValidator,
+      lt: SimpleConditionValidator,
+      lte: SimpleConditionValidator,
+      and: MultiConditionValidator,
+      or: MultiConditionValidator,
+    };
+
+    const ValidationClass = validationClasses[operator];
+
+    return new ValidationClass(operator);
+  }
+}
+
 class BaseConditionValidator {
   constructor(operator) {
     this.operator = operator;
@@ -72,25 +91,6 @@ class MultiConditionValidator extends BaseConditionValidator {
         );
       },
     };
-  }
-}
-
-class ValidatorFactory {
-  static getValidator(operator) {
-    const validationClasses = {
-      eq: SimpleConditionValidator,
-      in: SimpleConditionValidator,
-      gt: SimpleConditionValidator,
-      gte: SimpleConditionValidator,
-      lt: SimpleConditionValidator,
-      lte: SimpleConditionValidator,
-      and: MultiConditionValidator,
-      or: MultiConditionValidator,
-    };
-
-    const ValidationClass = validationClasses[operator];
-
-    return new ValidationClass(operator);
   }
 }
 
