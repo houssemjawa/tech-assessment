@@ -2,7 +2,7 @@ const {
   formatConditions,
   splitCondition,
   checkSimpleCondition,
-} = require("./helpers");
+} = require('./helpers');
 
 const validateCondition = (condition, value) => {
   const [operator, rule] = splitCondition(condition);
@@ -24,7 +24,7 @@ class BaseConditionValidator {
 
 class SimpleConditionValidator extends BaseConditionValidator {
   constructor(operator) {
-    super(operator || "eq");
+    super(operator || 'eq');
   }
 
   getOperations(cond, value) {
@@ -32,7 +32,7 @@ class SimpleConditionValidator extends BaseConditionValidator {
       eq() {
         return checkSimpleCondition(
           value,
-          (v) => v === cond || v?.toString() === cond?.toString()
+          (v) => v === cond || v?.toString() === cond?.toString(),
         );
       },
       in() {
@@ -63,12 +63,12 @@ class MultiConditionValidator extends BaseConditionValidator {
     return {
       or() {
         return formatConditions(conditions).some((condition) =>
-          validateCondition(condition, value)
+          validateCondition(condition, value),
         );
       },
       and() {
         return formatConditions(conditions).every((condition) =>
-          validateCondition(condition, value)
+          validateCondition(condition, value),
         );
       },
     };
