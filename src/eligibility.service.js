@@ -11,9 +11,9 @@ class EligibilityService {
    * @return {boolean}
    */
   isEligible(cart, criteria) {
-    return Object.keys(criteria).every((key) => {
+    return Object.entries(criteria).every(([key, condition]) => {
       const value = getValue(key, cart);
-      return validateCondition(criteria[key], value);
+      return validateCondition(condition, value);
     });
   }
 }
