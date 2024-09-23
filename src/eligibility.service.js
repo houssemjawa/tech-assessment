@@ -1,5 +1,5 @@
-const { getValue } = require('./helpers');
-const validateCondition = require('./validate-condition');
+const { getValue } = require("./helpers");
+const validateCondition = require("./validate-condition");
 
 class EligibilityService {
   /**

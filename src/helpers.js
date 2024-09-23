@@ -1,4 +1,4 @@
-const { isPlainObject, toPairs } = require('lodash');
+const { isPlainObject, toPairs } = require("lodash");
 
 /**
  * getValue by key
@@ -9,7 +9,7 @@ const { isPlainObject, toPairs } = require('lodash');
  * @returns {any}
  */
 const getValue = (key, cart) => {
-  const path = key.split('.');
+  const path = key.split(".");
   const value = path.reduce((acc, subKey) => {
     if (!acc) return undefined;
 
@@ -24,13 +24,13 @@ const getValue = (key, cart) => {
 };
 
 const formatConditions = (rule) => {
-  return toPairs(rule).map(([k, v]) => ({ [k]: v }))
+  return toPairs(rule).map(([k, v]) => ({ [k]: v }));
 };
 
 const splitCondition = (condition) => {
   const isEq = !isPlainObject(condition);
 
-  const operator = isEq ? 'eq' : Object.keys(condition).at(0);
+  const operator = isEq ? "eq" : Object.keys(condition).at(0);
   const rule = isEq ? condition : condition[operator];
 
   return [operator, rule];
@@ -38,7 +38,7 @@ const splitCondition = (condition) => {
 
 const checkSimpleCondition = (value, func) => {
   return Array.isArray(value) ? value.some(func) : func(value);
-}
+};
 
 module.exports = {
   getValue,
